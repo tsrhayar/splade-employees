@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Forms\CreateEmployeeForm;
+use App\Models\Country;
+use App\Tables\Employees;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -12,6 +15,10 @@ class EmployeeController extends Controller
     public function index()
     {
         //
+        return view('admin.employees.index', [
+            'employees' => Employees::class,
+
+        ]);
     }
 
     /**
@@ -20,6 +27,9 @@ class EmployeeController extends Controller
     public function create()
     {
         //
+        return view('admin.employees.create', [
+            'countries' => Country::pluck('name', 'id')->toArray()
+        ]);
     }
 
     /**

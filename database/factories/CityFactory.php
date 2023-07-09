@@ -3,12 +3,13 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Country>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\City>
  */
-class CountryFactory extends Factory
+class CityFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,11 +18,11 @@ class CountryFactory extends Factory
      */
     public function definition(): array
     {
-
+        $ids = DB::table('states')->pluck('id');
         return [
             //
             'name' =>  Str::random(10),
-            'country_code' =>  Str::random(3)
+            'state_id ' => $this->faker->randomElement($ids),
         ];
     }
 }

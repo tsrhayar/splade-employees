@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('firstname', 60);
             $table->string('middle_name', 60);
             $table->string('adress', 120);
+            $table->foreignId('department_id')->constrained();
             $table->foreignId('city_id')->constrained();
             $table->foreignId('state_id')->constrained();
             $table->foreignId('country_id')->constrained();

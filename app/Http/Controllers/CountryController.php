@@ -9,7 +9,9 @@ use App\Tables\Countries;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use ProtoneMedia\Splade\Facades\Splade;
-
+use ProtoneMedia\Splade\FormBuilder\Input;
+use ProtoneMedia\Splade\FormBuilder\Submit;
+use ProtoneMedia\Splade\SpladeForm;
 
 class CountryController extends Controller
 {
@@ -33,7 +35,6 @@ class CountryController extends Controller
     {
         //
         return view('admin.countries.create');
-
     }
 
     /**
@@ -65,8 +66,19 @@ class CountryController extends Controller
     public function edit(Country $country)
     {
         //
-        return view('admin.countries.edit', compact('country'));
+        // return view('admin.countries.edit', compact('country'));
 
+        $form = SpladeForm::make()
+            ->action(route('admin.countries.update', $country))
+            ->fields([
+                Input::make('name')->label('Name')->class('mb-3'),
+                Input::make('country_code')->label('Country Code')->class('mb-3'),
+                Submit::make()->label('Update')
+            ])
+            ->fill($country)
+            ->method('PUT')->class('p-4 bg-white rounded-md space-y-2');
+
+        return view('admin.countries.edit', compact('form', 'country'));
     }
 
     /**
@@ -86,8 +98,15 @@ class CountryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Country $country)
     {
         //
+        $country->delete();
+        Splade::toast('Country deleted successfully')
+            ->centerTop()
+            ->success()
+            ->autoDismiss(3);
+
+        return to_route('admin.countries.index');
     }
 }
