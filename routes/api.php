@@ -22,10 +22,10 @@ Route::get('/states/{state_id}', function ($state_id) {
     return response()->json($country->states);
 });
 
-Route::get('/cities/{country_id}', function ($country_id) {
-    $country = Country::findOrFail($country_id);
+Route::get('/cities/{city_id}', function ($state_id) {
+    $states = State::findOrFail($state_id);
 
-    return response()->json($country->cities);
+    return response()->json($states->cities);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

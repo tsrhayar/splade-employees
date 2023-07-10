@@ -27,17 +27,6 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
-
-
-        // $form = SpladeForm::make()
-        //     ->action(route('users.store'))
-        //     ->fields([
-        //         Input::make('username')->label('Username'),
-        //         Password::make('password')->label('Password'),
-        //         Submit::make()->label('Create'),
-        //     ]);
-
         return view('admin.users.create');
     }
 

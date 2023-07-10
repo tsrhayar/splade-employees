@@ -2,15 +2,15 @@
 
 namespace App\Tables;
 
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use ProtoneMedia\Splade\AbstractTable;
 use ProtoneMedia\Splade\SpladeTable;
+use Spatie\Permission\Models\Role as ModelsRole;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Support\Collection;
 
-class Users extends AbstractTable
+class Roles extends AbstractTable
 {
     /**
      * Create a new instance.
@@ -39,26 +39,21 @@ class Users extends AbstractTable
      */
     public function for ()
     {
-
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 Collection::wrap($value)->each(function ($value) use ($query) {
                     $query
-                        ->orWhere('username', 'LIKE', "%{$value}%")
-                        ->orWhere('first_name', 'LIKE', "%{$value}%")
-                        ->orWhere('last_name', 'LIKE', "%{$value}%")
-                        ->orWhere('email', 'LIKE', "%{$value}%");
+                        ->orWhere('name', 'LIKE', "%{$value}%");
                 });
             });
         });
 
-        $users = QueryBuilder::for(User::whereDoesntHave('roles', function ($q) {
-            $q->where('name', 'admin');
-        }))->defaultSort('created_at')
-            ->allowedSorts(['id', 'username', 'email', 'first_name', 'last_name', 'created_at'])
-            ->allowedFilters(['id', 'name', 'email', 'first_name', 'last_name', 'created_at', $globalSearch]);
+        $roles = QueryBuilder::for(ModelsRole::where('name', '!=', 'admin'))
+            ->defaultSort('created_at')
+            ->allowedSorts(['name', 'created_at'])
+            ->allowedFilters(['name', 'created_at', $globalSearch]);
 
-        return $users;
+        return $roles;
     }
 
     /**
@@ -70,14 +65,10 @@ class Users extends AbstractTable
     public function configure(SpladeTable $table)
     {
         $table
-            ->withGlobalSearch(columns: ['id', 'email', 'first_name', 'last_name'])
-            ->column('username', sortable: true)
-            ->column('email', sortable: true)
-            ->column('first_name', sortable: true, hidden: true)
-            ->column('last_name', sortable: true, hidden: true)
-            ->column('created_at', sortable: true)
+            ->withGlobalSearch(columns: ['name'])
+            ->column('name', sortable: true)
             ->column('action')
-            ->paginate(10);
+        ;
 
         // ->searchInput()
         // ->selectFilter()
