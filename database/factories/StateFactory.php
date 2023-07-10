@@ -21,8 +21,8 @@ class StateFactory extends Factory
         $ids = DB::table('countries')->pluck('id');
         return [
             //
+            'country_id' => $this->faker->randomElement($ids),
             'name' =>  Str::random(10),
-            'country_id ' => $this->faker->randomElement($ids),
         ];
     }
 }

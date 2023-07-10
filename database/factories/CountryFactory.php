@@ -21,7 +21,7 @@ class CountryFactory extends Factory
         return [
             //
             'name' =>  Str::random(10),
-            'country_code' =>  Str::random(3)
+            'country_code' =>  Str::random(3),
         ];
     }
 }

@@ -22,7 +22,7 @@ class CityFactory extends Factory
         return [
             //
             'name' =>  Str::random(10),
-            'state_id ' => $this->faker->randomElement($ids),
+            'state_id' => $this->faker->randomElement($ids),
         ];
     }
 }

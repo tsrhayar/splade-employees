@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Forms\CreateEmployeeForm;
 use App\Models\Country;
+use App\Models\Department;
 use App\Tables\Employees;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,8 @@ class EmployeeController extends Controller
     {
         //
         return view('admin.employees.create', [
-            'countries' => Country::pluck('name', 'id')->toArray()
+            'countries' => Country::pluck('name', 'id')->toArray(),
+            'departments' => Department::pluck('name', 'id')->toArray(),
         ]);
     }
 

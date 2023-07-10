@@ -19,7 +19,10 @@ class DatabaseSeeder extends Seeder
         //     CitySeeder::class,
         //     DepartementSeeder::class,
         // ]);
-        \App\Models\Country::factory(20)->create();
+        \App\Models\Country::factory(10)->create();
+        \App\Models\State::factory(30)->create();
+        \App\Models\City::factory(70)->create();
+        \App\Models\Department::factory(6)->create();
         \App\Models\User::factory(20)->create();
 
         \App\Models\User::factory()->create([

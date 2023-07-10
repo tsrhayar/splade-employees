@@ -8,9 +8,10 @@
         <x-splade-input name="zip_code" class="mb-3" label="Zip code" />
         <x-splade-input name="birthdate" class="mb-3" label="Birthdate" date  />
         <x-splade-input name="date_hired" class="mb-3" label="Date hired" date  />
-        <x-splade-select name="country_id" :options="$countries" />
-        <x-splade-select name="state_id" remote-url="`/api/regions/${form.country_id}`" />
-        <x-splade-select name="city_id" remote-url="`/api/regions/${form.state_id}`" />
+        <x-splade-select name="country_id" class="mb-3" label="Country" :options="$countries" />
+        <x-splade-select name="state_id" class="mb-3" label="State" remote-url="`/api/states/${form.country_id}`" option-label="name" option-value="id" />
+        <x-splade-select name="city_id"  class="mb-3" label="City" remote-url="`/api/cities/${form.state_id}`" />
+        <x-splade-select name="department_id" :options="$departments" />
 
         {{-- <x-splade-input name="email" label="Email" />
         <x-splade-input type="password" name="password" label="Password" />
