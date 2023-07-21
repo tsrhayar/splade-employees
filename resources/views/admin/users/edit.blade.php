@@ -5,7 +5,10 @@
         <x-splade-input name="first_name" class="mb-3" label="Firstname" />
         <x-splade-input name="last_name" class="mb-3" label="Lastname" />
         <x-splade-input name="email" label="Email" />
-
+        <x-splade-select name="permissions[]" label="Permissions" class="mb-3" :options="$permissions" multiple relation
+            choices />
+        <x-splade-select name="roles[]" label="Roles" class="mb-3" :options="$roles" multiple relation
+            choices />
         <x-splade-submit />
     </x-splade-form>
 </x-admin-layout>

@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Permission;
 
-class UpdateRoleRequest extends FormRequest
+class StorePermissionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class UpdateRoleRequest extends FormRequest
     {
         return [
             //
-            'name' => ['required', 'string', 'max:255', Rule::unique('roles', 'name')->ignore($this->role->id)],
-            'permissions' => ['nullable'],
+            'name' => ['required', 'string', 'min:3', 'max:30', 'unique:' . Permission::class],
+            'roles'=> ['nullable']
         ];
     }
 }

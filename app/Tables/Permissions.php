@@ -6,6 +6,10 @@ use App\Models\Permission;
 use Illuminate\Http\Request;
 use ProtoneMedia\Splade\AbstractTable;
 use ProtoneMedia\Splade\SpladeTable;
+use Spatie\QueryBuilder\AllowedFilter;
+use Illuminate\Support\Collection;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\Permission\Models\Permission as ModelsPermission;
 
 class Permissions extends AbstractTable
 {
@@ -36,7 +40,21 @@ class Permissions extends AbstractTable
      */
     public function for ()
     {
-        return Permission::query();
+        $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
+            $query->where(function ($query) use ($value) {
+                Collection::wrap($value)->each(function ($value) use ($query) {
+                    $query
+                        ->orWhere('name', 'LIKE', "%{$value}%");
+                });
+            });
+        });
+
+        $roles = QueryBuilder::for(ModelsPermission::where('name', '!=', 'admin'))
+            ->defaultSort('created_at')
+            ->allowedSorts(['name', 'created_at'])
+            ->allowedFilters(['name', 'created_at', $globalSearch]);
+
+        return $roles;
     }
 
     /**
@@ -48,8 +66,8 @@ class Permissions extends AbstractTable
     public function configure(SpladeTable $table)
     {
         $table
-            ->withGlobalSearch(columns: ['id'])
-            ->column('id', sortable: true)
+            ->withGlobalSearch(columns: ['name'])
+            ->column('name', sortable: true)
             ->column('action')
         ;
 
