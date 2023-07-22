@@ -37,7 +37,7 @@ class Roles extends AbstractTable
      *
      * @return mixed
      */
-    public function for ()
+    public function for()
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
@@ -67,8 +67,11 @@ class Roles extends AbstractTable
         $table
             ->withGlobalSearch(columns: ['name'])
             ->column('name', sortable: true)
-            ->column('action')
-        ;
+            ->column(
+                key: 'permissions.name',
+                label: 'Permissions'
+            )
+            ->column('action');
 
         // ->searchInput()
         // ->selectFilter()

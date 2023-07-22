@@ -2,7 +2,6 @@
 
 namespace App\Tables;
 
-use App\Models\Permission;
 use Illuminate\Http\Request;
 use ProtoneMedia\Splade\AbstractTable;
 use ProtoneMedia\Splade\SpladeTable;
@@ -38,7 +37,7 @@ class Permissions extends AbstractTable
      *
      * @return mixed
      */
-    public function for ()
+    public function for()
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
@@ -68,8 +67,12 @@ class Permissions extends AbstractTable
         $table
             ->withGlobalSearch(columns: ['name'])
             ->column('name', sortable: true)
-            ->column('action')
-        ;
+            // ->column('roles', sortable: true)
+            ->column(
+                key: 'roles.name',
+                label: 'Roles'
+            )
+            ->column('action');
 
         // ->searchInput()
         // ->selectFilter()

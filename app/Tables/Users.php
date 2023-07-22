@@ -37,7 +37,7 @@ class Users extends AbstractTable
      *
      * @return mixed
      */
-    public function for ()
+    public function for()
     {
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
@@ -72,10 +72,20 @@ class Users extends AbstractTable
         $table
             ->withGlobalSearch(columns: ['id', 'email', 'first_name', 'last_name'])
             ->column('username', sortable: true)
+            ->column('first_name', sortable: true)
+            ->column('last_name', sortable: true)
             ->column('email', sortable: true)
-            ->column('first_name', sortable: true, hidden: true)
-            ->column('last_name', sortable: true, hidden: true)
-            ->column('created_at', sortable: true)
+            ->column('created_at', sortable: true, hidden: true)
+            ->column(
+                key: 'permissions.name',
+                label: 'Permissions',
+                hidden: true
+            )
+            ->column(
+                key: 'roles.name',
+                label: 'Roles',
+                hidden: true
+            )
             ->column('action')
             ->paginate(10);
 
