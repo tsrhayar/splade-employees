@@ -8,9 +8,9 @@
     >
         <div class="flex flex-col justify-between flex-1 mt-3">
             <nav class="-mx-3 space-y-6">
-                <a
+                <Link
                     class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
-                    href="#"
+                    href="/admin"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +28,7 @@
                     </svg>
 
                     <span class="mx-2 text-sm font-medium">Dashboard</span>
-                </a>
+                </Link>
                 <div class="space-y-3">
                     <label
                         class="px-3 text-xs text-gray-500 uppercase dark:text-gray-400"
